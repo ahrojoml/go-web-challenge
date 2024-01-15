@@ -22,12 +22,12 @@ type LoaderTicketCSV struct {
 }
 
 // Load loads the tickets from the CSV file
-func (t *LoaderTicketCSV) Load() (map[int]internal.TicketAttributes, error) {
+func (t *LoaderTicketCSV) Load() (map[int]internal.TicketAttributes, int, error) {
 	// open the file
 	f, err := os.Open(t.filePath)
 	if err != nil {
 		err = fmt.Errorf("error opening file: %v", err)
-		return nil, err
+		return nil, 0, err
 	}
 	defer f.Close()
 
@@ -36,6 +36,7 @@ func (t *LoaderTicketCSV) Load() (map[int]internal.TicketAttributes, error) {
 
 	// read the records
 	tickets := make(map[int]internal.TicketAttributes)
+	lastId := 0
 	for {
 		record, err := r.Read()
 		if err != nil {
@@ -44,7 +45,7 @@ func (t *LoaderTicketCSV) Load() (map[int]internal.TicketAttributes, error) {
 			}
 
 			err = fmt.Errorf("error reading record: %v", err)
-			return nil, err
+			return nil, 0, err
 		}
 
 		// serialize the record
@@ -70,7 +71,8 @@ func (t *LoaderTicketCSV) Load() (map[int]internal.TicketAttributes, error) {
 
 		// add the ticket to the map
 		tickets[id] = ticket
+		lastId = max(lastId, id)
 	}
 
-	return tickets, nil
+	return tickets, lastId, nil
 }

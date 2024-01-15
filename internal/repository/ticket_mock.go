@@ -20,7 +20,7 @@ type RepositoryTicketMock struct {
 	// Spy verifies if the methods were called
 	Spy struct {
 		// Get represents the spy for the Get function
-		Get int
+		GetAll int
 		// GetTicketsByDestinationCountry represents the spy for the GetTicketsByDestinationCountry function
 		GetTicketsByDestinationCountry int
 	}
@@ -29,7 +29,7 @@ type RepositoryTicketMock struct {
 // GetAll returns all the tickets
 func (r *RepositoryTicketMock) GetAll(ctx context.Context) (t map[int]internal.TicketAttributes, err error) {
 	// spy
-	r.Spy.Get++
+	r.Spy.GetAll++
 
 	// mock
 	t, err = r.FuncGet()

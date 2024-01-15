@@ -27,19 +27,20 @@ type Ticket struct {
 // RepositoryTicket represents the repository interface for tickets
 type RepositoryTicket interface {
 	// GetAll returns all the tickets
-	Get(ctx context.Context) (t map[int]TicketAttributes, err error)
+	GetAll(ctx context.Context) (map[int]TicketAttributes, error)
 
 	// GetTicketByDestinationCountry returns the tickets filtered by destination country
-	GetTicketByDestinationCountry(ctx context.Context, country string) (t map[int]TicketAttributes, err error)
+	GetTicketsByDestinationCountry(ctx context.Context, country string) (map[int]TicketAttributes, error)
 }
 
 type ServiceTicket interface {
+
 	// GetTotalAmountTickets returns the total amount of tickets
-	GetTotalAmountTickets() (total int, err error)
+	GetTotalTickets(ctx context.Context) (int, error)
 
 	// GetTicketsAmountByDestinationCountry returns the amount of tickets filtered by destination country
-	// ...
+	GetTicketsAmountByDestinationCountry(ctx context.Context, country string) (int, error)
 
 	// GetPercentageTicketsByDestinationCountry returns the percentage of tickets filtered by destination country
-	// ...
+	GetPercentageTicketsByDestinationCountry(ctx context.Context, country string) (float64, error)
 }

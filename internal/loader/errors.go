@@ -8,8 +8,8 @@ func (e *DBLoadError) Error() string {
 	return e.msg
 }
 
-func NewDBLoadError(msg string) DBLoadError {
-	return DBLoadError{
+func NewDBLoadError(msg string) error {
+	return &DBLoadError{
 		msg: msg,
 	}
 }
