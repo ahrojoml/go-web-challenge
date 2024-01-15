@@ -1,13 +1,16 @@
 package service_test
 
 import (
+	"go-web-challenge/internal"
+	"go-web-challenge/internal/repository"
+	"go-web-challenge/internal/service"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 // Tests for ServiceTicketDefault.GetTotalAmountTickets
-func TestServiceTicketDefault_GetTotalAmountTickets() {
+func TestServiceTicketDefault_GetTotalAmountTickets(t *testing.T) {
 	t.Run("success to get total tickets", func(t *testing.T) {
 		// arrange
 		// - repository: mock
@@ -30,7 +33,7 @@ func TestServiceTicketDefault_GetTotalAmountTickets() {
 		sv := service.NewServiceTicketDefault(rp)
 
 		// act
-		total, err := sv.GetTotalAmountTickets()
+		total, err := sv.GetTotalTickets()
 
 		// assert
 		expectedTotal := 1

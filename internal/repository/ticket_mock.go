@@ -1,10 +1,13 @@
 package repository
 
-import "context"
+import (
+	"context"
+	"go-web-challenge/internal"
+)
 
 // NewRepositoryTicketMock creates a new repository for tickets in a map
-func NewRepositoryTicketMock() *RepositoryTicketMap {
-	return &RepositoryTicketMap{}
+func NewRepositoryTicketMock() *RepositoryTicketMock {
+	return &RepositoryTicketMock{}
 }
 
 // RepositoryTicketMock implements the repository interface for tickets
@@ -24,7 +27,7 @@ type RepositoryTicketMock struct {
 }
 
 // GetAll returns all the tickets
-func (r *RepositoryTicketMock) Get(ctx context.Context) (t map[int]internal.TicketAttributes, err error) {
+func (r *RepositoryTicketMock) GetAll(ctx context.Context) (t map[int]internal.TicketAttributes, err error) {
 	// spy
 	r.Spy.Get++
 
