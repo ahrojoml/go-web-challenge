@@ -118,7 +118,7 @@ func TestGetPercentageTicketsByDestinationCountry(t *testing.T) {
 		expectError error
 	}{
 		{
-			name:        "error retrieving tickets",
+			name:        "no country provided",
 			country:     "",
 			expectError: service.NewInvalidCountryError("no country provided"),
 		}, {
@@ -146,21 +146,7 @@ func TestGetPercentageTicketsByDestinationCountry(t *testing.T) {
 
 	for idx, tC := range testCases {
 		t.Run(fmt.Sprint(idx, tC.name), func(t *testing.T) {
-			rp := repository.NewRepositoryTicketMock()
-			rp.FuncGet = func() (map[int]internal.TicketAttributes, error) {
-				tickets := tC.tickets
-				return tickets, nil
-			}
-
-			rp.FuncGetTicketsByDestinationCountry = func(country string) (map[int]internal.TicketAttributes, error) {
-				tickets := make(map[int]internal.TicketAttributes)
-				for k, v := range tC.tickets {
-					if v.Country == country {
-						tickets[k] = v
-					}
-				}
-				return tickets, nil
-			}
+			rp := repository.NewRepositoryTicketMap(tC.tickets, 2)
 
 			sv := service.NewServiceTicketDefault(rp)
 
