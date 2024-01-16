@@ -4,9 +4,16 @@ import (
 	"fmt"
 	"go-web-challenge/internal/application"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+		return
+	}
 	// application
 	// - config
 	cfg := &application.ConfigAppDefault{
@@ -16,7 +23,7 @@ func main() {
 	app := application.NewApplicationDefault(cfg)
 
 	// - setup
-	err := app.SetUp()
+	err = app.SetUp()
 	if err != nil {
 		fmt.Println(err)
 		return
